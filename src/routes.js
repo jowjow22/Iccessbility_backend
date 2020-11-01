@@ -9,7 +9,7 @@ const user = new UserController();
 
 
 routes.get('/', (req,res)=>{
-    res.send(200).json({
+    res.status(200).json({
         "Message" : "Welcome to Iccessbility API"
     });
 });

@@ -147,7 +147,7 @@ class User {
             });
         }
     }
-    async deleteUser(req, res) {
+    async delete(req, res) {
         const { cd } = req.params;
 
         try {
@@ -183,6 +183,18 @@ class User {
         } catch (err) {
             return res.status(400).send({
                 Error: 'Falha ao encontrar Usuário'
+            });
+        }
+    }
+    async showAll(req, res){
+        try {
+            const user = await knex('tb_usuario')
+                .select();
+
+            return res.status(202).json( user );
+        } catch (err) {
+            return res.status(400).send({
+                Error: 'Falha ao encontrar Usuários'
             });
         }
     }

@@ -179,7 +179,7 @@ class User {
                 .first()
                 .select();
 
-            return res.status(202).json({ user });
+            return res.status(202).json( user );
         } catch (err) {
             return res.status(400).send({
                 Error: 'Falha ao encontrar Usuário'

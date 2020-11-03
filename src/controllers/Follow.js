@@ -7,6 +7,11 @@ class Follow{
     async create(req, res){
         const { uFollowID, uFollowingID } = req.params;
 
+        const follow = {
+            id_usuario : uFollowID,
+            id_usuario_segue: uFollowingID
+        }
+
         const trx = await knex.transaction();
 
         try {

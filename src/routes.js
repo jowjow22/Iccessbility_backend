@@ -3,12 +3,13 @@ const { Router } = require('express');
 const routes = Router();
 
 const UserController = require('./controllers/Users');
-const eTypeController = require('./controllers/EstablishmentType');
+const FollowController = require('./controllers/Follow');
 const Auth = require('./middleware/auth');
 const EstablishmentType = require('./controllers/EstablishmentType');
 const auth = new Auth();
 const user = new UserController();
 const eType = new EstablishmentType();
+const follow = new FollowController();
 
 
 routes.get('/', (req,res)=>{
@@ -31,7 +32,14 @@ routes.post('/eType', auth.auth, eType.create);
 routes.delete('/eType/:cd', auth.auth, eType.delete);
 routes.get('/eType/:cd', eType.show);
 routes.get('/eType', eType.showAll);
-routes.patch('/eType/:cd_tp_estabelecimento', auth.auth, eType.update)
+routes.patch('/eType/:cd_tp_estabelecimento', auth.auth, eType.update);
+
+// FOLLOW ROUTES
+
+routes.post('/follow/:uFollowID/:uFollowingID', follow.create);
+routes.get('/following/:userID', follow.showFollowing);
+routes.get('/followers/:userID', follow.showFollowers);
+routes.delete('/unfollow/:uFollowID/:uFollowingID', follow.unfollow);
 
 
 module.exports = routes;

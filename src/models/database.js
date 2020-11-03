@@ -6,7 +6,8 @@ const knex = require('knex')({
       host : 'us-cdbr-east-02.cleardb.com',
       user : 'b0ac80219ae14d',
       password : 'e552fd5f',
-      database : 'heroku_6acdebaa0c29830'
+      database : 'heroku_6acdebaa0c29830',
+      dateStrings: true
     }
   });
   // const knex = require('knex')({
@@ -15,7 +16,8 @@ const knex = require('knex')({
   //     host : 'localhost',
   //     user : 'root',
   //     password : '',
-  //     database : 'db_iccessbility'
+  //     database : 'db_iccessbility',
+  //     dateStrings: true
   //   }
   // });
 

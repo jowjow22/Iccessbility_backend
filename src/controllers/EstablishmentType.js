@@ -8,7 +8,7 @@ class EstablishmentType {
         const { nome } = req.body;
         const eType = { nm_tipo: nome };
 
-        const verifyEtype = verifyEntity('tb_tipo_estabelecimento', 'nm_tipo', nome);
+        const verifyEtype = verifyEntity('tb_tipo_estabelecimento', { nm_tipo : nome });
 
         if(verifyEtype === true) {
             return res.status(409).send({
@@ -36,7 +36,7 @@ class EstablishmentType {
         const { cd } = req.params;
 
         try {
-            deleteEntity('tb_tipo_estabelecimento', 'cd_tp_estabelecimento', cd);
+            deleteEntity('tb_tipo_estabelecimento', { cd_tp_estabelecimento: cd });
 
             return res.status(200).json({
                 Success: `Sucesso ao excluir tipo de estabelecimento com ID ${cd}`
@@ -52,7 +52,7 @@ class EstablishmentType {
     async show(req, res){
         const { cd } = req.params;
 
-        const verifyEtype = await verifyEntity('tb_tipo_estabelecimento', 'cd_tp_estabelecimento', cd);
+        const verifyEtype = await verifyEntity('tb_tipo_estabelecimento', { cd_tp_estabelecimento : cd });
 
         if(verifyEtype === false){
             return res.status(404).send({
@@ -89,7 +89,7 @@ class EstablishmentType {
         const { nome } = req.body;
         const eType = { nm_tipo: nome };
 
-        const verifyEtype = verifyEntity('tb_tipo_estabelecimento', 'cd_tp_estabelecimento', cd_tp_estabelecimento);
+        const verifyEtype = verifyEntity('tb_tipo_estabelecimento', { cd_tp_estabelecimento : cd_tp_estabelecimento });
 
         if(verifyEtype === false) {
             return res.status(404).send({

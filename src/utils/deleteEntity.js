@@ -1,8 +1,8 @@
 const knex = require('../models/database');
 
-async function deleteEntity(table, column,field){
+async function deleteEntity(table, object){
     await knex(table)
-        .where(column, field)
+        .where(object)
         .delete();
 }
 module.exports = deleteEntity;

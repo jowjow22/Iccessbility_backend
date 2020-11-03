@@ -32,8 +32,8 @@ class User {
 
         const verifyCpfCnpj = await verifyEntity(
             'tb_usuario', 
-            'nm_cpf_cnpj',
-            cpf_cnpj
+            { nm_cpf_cnpj : cpf_cnpj }
+            
         );
 
         if(verifyCpfCnpj === false){
@@ -100,8 +100,8 @@ class User {
          
          const verifyUser = await verifyEntity(
             'tb_usuario', 
-            'nm_cpf_cnpj', 
-            cpf_cnpj
+            { nm_cpf_cnpj: cpf_cnpj }
+            
         );
 
         if(verifyUser === true) {
@@ -151,7 +151,7 @@ class User {
         const { cd } = req.params;
 
         try {
-            deleteEntity('tb_usuario', 'cd_usuario', cd);
+            deleteEntity('tb_usuario', { cd_usuario: cd });
 
             return res.status(200).json({
                 success: `Sucesso ao deletar o usuário com ID ${cd}`
@@ -166,7 +166,7 @@ class User {
     async show(req, res){
         const { cd } = req.params;
 
-        const verifyUser = await verifyEntity('tb_usuario', 'cd_usuario', cd);
+        const verifyUser = await verifyEntity('tb_usuario', { cd_usuario: cd });
 
         if(verifyUser === false){
             return res.status(404).send({
@@ -231,8 +231,8 @@ class User {
 
         const verifyUser = await verifyEntity(
             'tb_usuario', 
-            'cd_usuario', 
-            cd_usuario
+            {cd_usuario: cd_usuario } 
+            
         );
 
         if(verifyUser === false){

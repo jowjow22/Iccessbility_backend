@@ -33,14 +33,15 @@ class Follow{
         const { userID } = req.params;
 
         try{
-            const followers = await knex.select('*')
+            const following = await knex.select('*')
                                     .from('tb_usuario')
                                     .leftJoin('tb_follow', 'tb_follow.id_usuario_segue', 'tb_usuario.cd_usuario')
                                     .where('id_usuario', userID);
                                     
             return res.status(200).json({
-                success: `Você segue ${followers.length} outros usuários`,
-                followers: followers
+                success: `Você segue ${following.length} outros usuários`,
+                followersNum: following.length,
+                followers: following
             });
 
         }catch(err){
@@ -61,6 +62,7 @@ class Follow{
                                 
         return res.status(200).json({
             success: `Você é seguido por ${followers.length} outros usuários`,
+            followersNum: followers.length,
             followers: followers
         });
 

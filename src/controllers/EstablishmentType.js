@@ -85,11 +85,11 @@ class EstablishmentType {
         }
     }
     async update(req, res){
-        const { cd_tp_estabelecimento } = req.params;
+        const { cd } = req.params;
         const { nome } = req.body;
         const eType = { nm_tipo: nome };
 
-        const verifyEtype = verifyEntity('tb_tipo_estabelecimento', { cd_tp_estabelecimento : cd_tp_estabelecimento });
+        const verifyEtype = verifyEntity('tb_tipo_estabelecimento', { cd_tp_estabelecimento : cd });
 
         if(verifyEtype === false) {
             return res.status(404).send({
@@ -98,7 +98,7 @@ class EstablishmentType {
         }
 
         try {
-            await knex('tb_tipo_estabelecimento').update( eType ).where({ cd_tp_estabelecimento });
+            await knex('tb_tipo_estabelecimento').update( eType ).where({ cd_tp_estabelecimento: cd });
             return res.status(200).json({ eType });
         } catch (err) {
             console.log(err);

@@ -6,6 +6,7 @@ const UserController = require('./controllers/Users');
 const FollowController = require('./controllers/Follow');
 const EstablishmentType = require('./controllers/EstablishmentType');
 const Establishment = require('./controllers/Establishment');
+const Rating = require('./controllers/Rating');
 const Auth = require('./middleware/auth');
 
 const auth = new Auth();
@@ -13,6 +14,7 @@ const user = new UserController();
 const eType = new EstablishmentType();
 const follow = new FollowController();
 const establishment = new Establishment();
+const rating = new Rating();
 
 
 routes.get('/', (req,res)=>{
@@ -31,7 +33,7 @@ routes.post('/login', user.login);
 
 // ETYPE ROUTES
 
-routes.post('/eType', auth.auth, eType.create);
+routes.post('/eType', eType.create);
 routes.delete('/eType/:cd', auth.auth, eType.delete);
 routes.get('/eType/:cd', eType.show);
 routes.get('/eType', eType.showAll);
@@ -46,10 +48,14 @@ routes.delete('/unfollow/:uFollowID/:uFollowingID', follow.unfollow);
 
 // ESTABLISHMENT ROUTES
 
-routes.post('/establishment',auth.auth, establishment.create);
-routes.get('/establishment',auth.auth, establishment.showInCity);
+routes.post('/establishment', establishment.create);
+routes.get('/establishment', establishment.showInCity);
 routes.delete('/establishment/:uID/:eID',auth.auth, establishment.delete);
 routes.patch('/establishment/:uID/:eID',auth.auth, establishment.update);
+
+// RATING ROUTES
+
+routes.post('/rating/:uID/:eID/:stars', rating.giveRating);
 
 
 module.exports = routes;

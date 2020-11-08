@@ -77,7 +77,8 @@ routes.patch('/accessbility/:cd', accessbility.update);
 
 routes.post('/eAccessbility', eAccessbility.create);
 routes.delete('/eAccessbility/:establishmentId/:aTypesId', eAccessbility.delete);
-routes.get('/eAccessbility', eAccessbility.showAll);
+routes.get('/eAccessbility/one/:eId', eAccessbility.showOne);
+routes.get('/eAccessbility/inAccess/:aId', eAccessbility.showInAccessbility);
 
 
 module.exports = routes;

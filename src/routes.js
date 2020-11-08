@@ -9,6 +9,11 @@ const Establishment = require('./controllers/Establishment');
 const Rating = require('./controllers/Rating');
 const Accessbility = require('./controllers/AccessbiltyType');
 const EAccessbility = require('./controllers/EstablishmentAccessbility');
+const TypePS = require('./controllers/TypeProdServ');
+const Post = require('./controllers/Posts');
+const Interest = require('./controllers/Interested');
+const Likes = require('./controllers/Likes');
+const Chat = require('./controllers/Chat');
 const Auth = require('./middleware/auth');
 
 const auth = new Auth();
@@ -19,6 +24,11 @@ const establishment = new Establishment();
 const accessbility = new Accessbility();
 const rating = new Rating();
 const eAccessbility = new EAccessbility();
+const typePS = new TypePS();
+const post = new Post();
+const like = new Likes();
+const interest = new Interest();
+const chat = new Chat();
 
 
 routes.get('/', (req,res)=>{
@@ -79,6 +89,31 @@ routes.post('/eAccessbility', eAccessbility.create);
 routes.delete('/eAccessbility/:establishmentId/:aTypesId', eAccessbility.delete);
 routes.get('/eAccessbility/one/:eId', eAccessbility.showOne);
 routes.get('/eAccessbility/inAccess/:aId', eAccessbility.showInAccessbility);
+
+// TYPEPS ROUTES
+routes.post('/typePS', typePS.create);
+routes.delete('/typePS/:typePSID', typePS.delete);
+routes.get('/typePS', typePS.showAll);
+routes.patch('/typePS/:typePSID', typePS.update);
+
+// POST ROUTES
+routes.post('/post', post.create);
+
+
+// INTEREST ROUTES
+routes.post('/interest/:postID/:userID', interest.create);
+routes.delete('/interest/:postID/:userID', interest.delete);
+routes.get('/interest/:postID', interest.showInteresteds);
+
+// LIKES ROUTES
+
+routes.post('/likes/:postID/:userID', like.giveLike);
+routes.delete('/likes/:postID/:userID', like.removeLike);
+routes.get('/likes/:postID', like.showLikes);
+
+// CHAT ROUTES
+routes.post('/chat/:rem/:dest', chat.sendMessage);
+routes.get('/chat/:rem/:dest', chat.listChatMessages);
 
 
 module.exports = routes;

@@ -12,6 +12,8 @@ class Post{
             description,
             image,
             type,
+            discount,
+            val,
             status,
             idType,
             idUser
@@ -35,6 +37,8 @@ class Post{
             ds_post: description,
             img_post: postImage,
             tp_post: type,
+            qt_desconto: discount,
+            val_prod_serv: val,
             ds_status: status,
             id_tp_prod_serv: idType,
             id_usuario: idUser
@@ -93,6 +97,8 @@ class Post{
             name,
             description,
             type,
+            discount,
+            val,
             status,
             idType
         } = req.body;
@@ -112,6 +118,8 @@ class Post{
             nm_titulo: name,
             ds_post: description,
             tp_post: type,
+            qt_desconto: discount,
+            val_prod_serv: val,
             ds_status: status,
             id_tp_prod_serv: idType
         }

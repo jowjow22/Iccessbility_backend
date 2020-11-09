@@ -3,6 +3,8 @@ const knex = require('../models/database');
 const verifyEntity = require('../utils/verifyEntity');
 const deleteEntity = require('../utils/deleteEntity');
 const imagesUpload = require('../utils/imageUploads');
+const imagesDelete = require('../utils/imageDelete');
+const imagesUpdate = require('../utils/imageUpdate');
 const config = require('../config/config');
 
 const crypto = require('crypto');
@@ -202,13 +204,11 @@ class User {
         const { 
             nome,
             nascimento,
-            foto,
             endereco,
             cidade,
             tipoPessoa,
             cpf_cnpj,
             bio,
-            capa,
             senha,
             telefone
          } =  req.body;
@@ -216,13 +216,11 @@ class User {
          const user = {
             nm_usuario: nome, 
             dt_nascimento: nascimento,
-            img_foto: foto,
             nm_endereco: endereco,
             nm_cidade: cidade,
             tp_pessoa: tipoPessoa,
             nm_cpf_cnpj: cpf_cnpj,
             ds_bio: bio,
-            img_capa: capa,
             nm_senha: senha,
             nr_telefone: telefone
           };
@@ -247,6 +245,49 @@ class User {
             console.log(err);
             return res.status(400).send({
                 Error: 'Falha ao atualizar Usuário'
+            });
+        }
+    }
+    async imageUpdate(req, res){
+        const { userID } = req.params;
+        const { newImage } = req.body;
+
+        const updateImageURL = await imagesUpdate('profile-images', 'img_foto', { cd_usuario:userID }, newImage, 'tb_usuario');
+        const updatedImage = {
+            img_foto : updateImageURL
+        }
+        try {
+            await knex('tb_usuario').update( updatedImage ).where({ cd_usuario:userID });
+
+            return res.status(200).json({
+                success: 'Imagem de perfil atualizada'
+            });
+        } catch (err) {
+            console.log(err);
+            return res.status(400).send({
+                error: 'erro ao selecionar'
+            });
+        }
+    }
+    async coverImageUpdate(req, res){
+        const { userID } = req.params;
+        const { newImage } = req.body;
+
+        const updateImageURL = await imagesUpdate('cover-images', 'img_capa', { cd_usuario:userID }, newImage, 'tb_usuario');
+
+        const updatedImage = {
+            img_capa : updateImageURL
+        }
+        try {
+            await knex('tb_usuario').update( updatedImage ).where({ cd_usuario:userID });
+
+            return res.status(200).json({
+                success: 'Imagem de perfil atualizada'
+            });
+        } catch (err) {
+            console.log(err);
+            return res.status(400).send({
+                error: 'erro ao selecionar'
             });
         }
     }

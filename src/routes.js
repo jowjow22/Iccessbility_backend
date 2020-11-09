@@ -44,76 +44,84 @@ routes.get('/user/:cd', user.show);
 routes.get('/user', user.showAll);
 routes.patch('/user/:cd_usuario', auth.auth, user.update);
 routes.post('/login', user.login);
+routes.patch('/user/profile/:userID', auth.auth, user.imageUpdate);
+routes.patch('/user/cover/:userID', auth.auth, user.coverImageUpdate);
 
 // ETYPE ROUTES
 
-routes.post('/eType', eType.create);
+routes.post('/eType', auth.auth, eType.create);
 routes.delete('/eType/:cd', auth.auth, eType.delete);
 routes.get('/eType/:cd', eType.show);
-routes.get('/eType', eType.showAll);
+routes.get('/eType', auth.auth, eType.showAll);
 routes.patch('/eType/:cd', auth.auth, eType.update);
 
 // FOLLOW ROUTES
 
-routes.post('/follow/:uFollowID/:uFollowingID', follow.create);
+routes.post('/follow/:uFollowID/:uFollowingID', auth.auth, follow.create);
 routes.get('/following/:userID', follow.showFollowing);
 routes.get('/followers/:userID', follow.showFollowers);
-routes.delete('/unfollow/:uFollowID/:uFollowingID', follow.unfollow);
+routes.delete('/unfollow/:uFollowID/:uFollowingID', auth.auth, follow.unfollow);
 
 // ESTABLISHMENT ROUTES
 
-routes.post('/establishment', establishment.create);
+routes.post('/establishment', auth.auth, establishment.create);
 routes.get('/establishment', establishment.showInCity);
 routes.delete('/establishment/:uID/:eID',auth.auth, establishment.delete);
 routes.patch('/establishment/:uID/:eID',auth.auth, establishment.update);
+routes.patch('/establishment/image/:uID/:eID', auth.auth,establishment.EstablishmentImageUpdate);
 
 // RATING ROUTES
 
-routes.post('/rating/:uID/:eID/:stars', rating.giveRating);
+routes.post('/rating/:uID/:eID/:stars', auth.auth, rating.giveRating);
 routes.get('/rating/establishment/:eId', rating.showInEstablishment);
-routes.get('/rating/your/:eId/:uId', rating.showYourRating);
-routes.patch('/rating/:eId/:uId/:stars', rating.update);
-routes.delete('/rating/:eId/:uId', rating.delete);
+routes.get('/rating/your/:eId/:uId', auth.auth, rating.showYourRating);
+routes.patch('/rating/:eId/:uId/:stars', auth.auth, rating.update);
+routes.delete('/rating/:eId/:uId', auth.auth, rating.delete);
 
 // ACCESSBILITY TYPE ROUTES
 
-routes.post('/accessbility', accessbility.create);
-routes.get('/accessbility', accessbility.showAll);
-routes.get('/accessbility/:cd', accessbility.show);
-routes.delete('/accessbility/:cd', accessbility.delete);
-routes.patch('/accessbility/:cd', accessbility.update);
+routes.post('/accessbility', auth.auth, accessbility.create);
+routes.get('/accessbility', auth.auth, accessbility.showAll);
+routes.get('/accessbility/:cd', auth.auth, accessbility.show);
+routes.delete('/accessbility/:cd', auth.auth, accessbility.delete);
+routes.patch('/accessbility/:cd', auth.auth, accessbility.update);
 
 // ESTABLISHMENT ACCESSIBILITY ROUTES
 
-routes.post('/eAccessbility', eAccessbility.create);
-routes.delete('/eAccessbility/:establishmentId/:aTypesId', eAccessbility.delete);
+routes.post('/eAccessbility', auth.auth, eAccessbility.create);
+routes.delete('/eAccessbility/:establishmentId/:aTypesId', auth.auth, eAccessbility.delete);
 routes.get('/eAccessbility/one/:eId', eAccessbility.showOne);
 routes.get('/eAccessbility/inAccess/:aId', eAccessbility.showInAccessbility);
 
 // TYPEPS ROUTES
-routes.post('/typePS', typePS.create);
-routes.delete('/typePS/:typePSID', typePS.delete);
-routes.get('/typePS', typePS.showAll);
-routes.patch('/typePS/:typePSID', typePS.update);
+routes.post('/typePS', auth.auth, typePS.create);
+routes.delete('/typePS/:typePSID', auth.auth, typePS.delete);
+routes.get('/typePS', auth.auth, typePS.showAll);
+routes.patch('/typePS/:typePSID', auth.auth, typePS.update);
 
 // POST ROUTES
-routes.post('/post', post.create);
+routes.post('/post', auth.auth, post.create);
+routes.delete('/post/:postID/:userID', auth.auth, post.delete);
+routes.patch('/post/:postID/:userID', auth.auth, post.update);
+routes.patch('/post/image/:pID/:uID', auth.auth, post.postImageUpdate);
+routes.get('/post/:userID', auth.auth, post.showPosts);
 
 
 // INTEREST ROUTES
-routes.post('/interest/:postID/:userID', interest.create);
-routes.delete('/interest/:postID/:userID', interest.delete);
-routes.get('/interest/:postID', interest.showInteresteds);
+routes.post('/interest/:postID/:userID', auth.auth, interest.create);
+routes.delete('/interest/:postID/:userID', auth.auth, interest.delete);
+routes.get('/interest/:postID', auth.auth, interest.showInteresteds);
 
 // LIKES ROUTES
 
-routes.post('/likes/:postID/:userID', like.giveLike);
-routes.delete('/likes/:postID/:userID', like.removeLike);
-routes.get('/likes/:postID', like.showLikes);
+routes.post('/likes/:postID/:userID', auth.auth, like.giveLike);
+routes.delete('/likes/:postID/:userID', auth.auth, like.removeLike);
+routes.get('/likes/:postID', auth.auth, like.showLikes);
 
 // CHAT ROUTES
-routes.post('/chat/:rem/:dest', chat.sendMessage);
-routes.get('/chat/:rem/:dest', chat.listChatMessages);
+routes.post('/chat/:rem/:dest', auth.auth, chat.sendMessage);
+routes.get('/chat/:rem/:dest', auth.auth, chat.listChatMessages);
+
 
 
 module.exports = routes;

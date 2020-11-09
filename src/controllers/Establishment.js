@@ -3,6 +3,7 @@ const knex = require('../models/database');
 const verifyEntity = require('../utils/verifyEntity');
 const deleteEntity = require('../utils/deleteEntity');
 const imagesUpload = require('../utils/imageUploads');
+const imagesUpdate = require('../utils/imageUpdate');
 
 class Establishment{
     async create(req, res){
@@ -64,7 +65,7 @@ class Establishment{
     async showInCity(req, res){
         const { cityName } = req.body;
         try{
-            const establishments = await await knex.select(knex.raw('e.*, group_concat(nm_acessibilidade) as acessibilidade'))
+            const establishments = await knex.select(knex.raw('e.*, group_concat(nm_acessibilidade) as acessibilidade'))
             .from(knex.raw('tb_acessibilidade a, tb_estabelecimento e'))
             .rightJoin('tb_estabelecimento_acessibilidade', 'tb_estabelecimento_acessibilidade.id_estabelecimento', 'e.cd_estabelecimento')
             .where(knex.raw(`e.nm_cidade_estabelecimento = "${cityName}"`))
@@ -111,7 +112,6 @@ class Establishment{
         const {
             name,
             city,
-            image,
             state,
             localization,
             totalRating,
@@ -122,7 +122,6 @@ class Establishment{
         const establishment = {
             nm_estabelecimento: name,
             nm_cidade_estabelecimento: city,
-            img_estabelecimento: image,
             sg_estado: state,
             loc_estabelecimento: localization,
             qt_media_stars: totalRating,
@@ -156,6 +155,39 @@ class Establishment{
             console.log(err);
             return res.status(400).send({
                 Error: 'Falha ao atualizar estabelecimento'
+            });
+        }
+    }
+    async EstablishmentImageUpdate(req, res){
+        const { uID, eID } = req.params;
+        const { newImage } = req.body;
+
+        const verifyEstablishment = await verifyEntity('tb_estabelecimento', { 
+            id_usuario: uID,
+            cd_estabelecimento: eID
+        });
+
+        if(verifyEstablishment === false){
+            return res.status(404).send({
+                Error: `Requisição Não Autorizada`
+            });
+        }
+
+        const updateImageURL = await imagesUpdate('establishment-images', 'img_estabelecimento', { cd_estabelecimento:eID }, newImage, 'tb_estabelecimento');
+
+        const updatedImage = {
+            img_estabelecimento : updateImageURL
+        }
+        try {
+            await knex('tb_estabelecimento').update( updatedImage ).where({ cd_estabelecimento:eID });
+
+            return res.status(200).json({
+                success: 'Imagem do estabelecimento foi atualizada'
+            });
+        } catch (err) {
+            console.log(err);
+            return res.status(400).send({
+                error: 'erro ao atualizar'
             });
         }
     }

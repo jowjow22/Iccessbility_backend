@@ -3,6 +3,11 @@ const jwt = require('jsonwebtoken');
 class Auth{
     async auth(req, res, next){
         const authHeader = req.headers.authorization;
+        if(!authHeader){
+            return res.status(401).json({
+                Error: 'Token Required'
+            });
+        }
         if(authHeader === 'Bearer'){
             return res.status(401).json({
                 Error: "Token Required"

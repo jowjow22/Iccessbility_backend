@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+
 const io = require('socket.io');
 
 const http = require('http');
@@ -9,11 +10,18 @@ const routes = require('./routes');
 
 const app = express();
 
-app.use('*', cors());
+var corsOptions = {
+    origin: 'http://localhost:3000',
+    optionsSuccessStatus: 200
+    }
+    
+app.use(cors(corsOptions))
+const server = http.createServer(http);
 
-//const server = http.createServer(http);
 
-io = io('*', {transports: ['websocket', 'polling', 'flashsocket']});
+io = io(server);
+
+
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({

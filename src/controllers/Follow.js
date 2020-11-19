@@ -15,12 +15,8 @@ class Follow{
         const trx = await knex.transaction();
 
         try {
-            const follow = await trx('tb_follow').insert(follow);
+            await trx('tb_follow').insert(follow);
             await trx.commit();
-            const ownerSocket = req.connectedUser[id_usuario];
-            if(ownerSocket){  
-                req.io.to(ownerSocket).emit('Follow', follow);
-            }
             const completeFollow = await knex('tb_follow').where(follow).first().select();
             return res.status(201).json({
                 success: 'Registrado Com sucesso',

@@ -60,6 +60,7 @@ routes.patch('/eType/:cd', auth.auth, eType.update);
 routes.post('/follow/:uFollowID/:uFollowingID', auth.auth, follow.create);
 routes.get('/following/:userID', follow.showFollowing);
 routes.get('/followers/:userID', follow.showFollowers);
+routes.get('/notFollowing/:userID', follow.showNotFollowing);
 routes.delete('/unfollow/:uFollowID/:uFollowingID', auth.auth, follow.unfollow);
 
 // ESTABLISHMENT ROUTES

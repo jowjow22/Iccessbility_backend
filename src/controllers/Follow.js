@@ -73,7 +73,26 @@ class Follow{
         });
     }
     }
+    async showNotFollowing(req, res){
+        const { userID } = req.params;
 
+        try{
+            const notFollowing = await knex.select('*')
+                                    .from('tb_usuario')
+                                    .where(knex.raw(`cd_usuario not in (select id_usuario_segue from tb_follow where id_usuario = ${userID})`))
+                                    .andWhere(knex.raw(`cd_usuario != ${userID}`));
+                                    
+            return res.status(200).json({
+                notFollowing: notFollowing
+            });
+    
+        }catch(err){
+            console.log(err);
+            return res.status(400).send({
+                Error: 'Erro ao buscar pessoas para seguir'
+            });
+        }
+    }
     async unfollow(req, res){
         const { uFollowID, uFollowingID } = req.params;
 

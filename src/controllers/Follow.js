@@ -83,7 +83,7 @@ class Follow{
                                     .andWhere(knex.raw(`cd_usuario != ${userID}`));
                                     
             return res.status(200).json({
-                notFollowing: notFollowing
+                notFollowing
             });
     
         }catch(err){

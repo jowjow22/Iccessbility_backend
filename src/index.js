@@ -9,10 +9,12 @@ const http = require('http');
 const routes = require('./routes');
 
 const app = express();
+
+app.use(cors());
+
 const server = http.createServer(http);
 
 
-app.use(cors());
 io = io(server);
 app.use(express.json());
 app.use(bodyParser.json());

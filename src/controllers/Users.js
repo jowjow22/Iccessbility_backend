@@ -58,6 +58,7 @@ class User {
 
                  const data = {
                     user: {
+                    id: user.cd_usuario,
                     name: user.nm_usuario,
                     nasc: user.dt_nascimento,
                     profilePic: user.img_foto,

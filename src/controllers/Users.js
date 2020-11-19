@@ -57,6 +57,7 @@ class User {
                  });
 
                  const data = {
+                    user: {
                     name: user.nm_usuario,
                     nasc: user.dt_nascimento,
                     profilePic: user.img_foto,
@@ -66,13 +67,14 @@ class User {
                     cpf_cnpj: user.nm_cpf_cnpj,
                     bio: user.ds_bio,
                     cover: user.img_capa,
-                    phone: user.nr_telefone,
+                    phone: user.nr_telefone
+                    },
                     token
                  }
 
-                return res.status(200).json({
+                return res.status(200).json(
                     data
-                });
+                );
             }
             else{
                 return res.status(404).send({

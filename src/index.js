@@ -17,7 +17,7 @@ io = io(server);
 io.on('connection', socket =>{
     console.log('new Connection');
 });
-
+server.use(cors());
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());

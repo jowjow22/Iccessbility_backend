@@ -19,6 +19,8 @@ io.on('connection', socket =>{
     const { userID } = socket.handshake.query;
     connectedUsers[userID] = socket.id;
 
+    console.log(`Socket Conectado ${socket.id}`);
+
     socket.on('disconnect', () => {
         delete connectedUsers[userID];
     });

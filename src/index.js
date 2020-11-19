@@ -12,9 +12,8 @@ const app = express();
 const server = http.createServer(http);
 
 
-io = io(server);
-
 app.use(cors());
+io = io(server);
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({

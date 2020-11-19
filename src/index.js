@@ -16,6 +16,7 @@ const server = http.createServer(http);
 
 
 io = io(server);
+io.origins(['*']);
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({

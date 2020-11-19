@@ -11,10 +11,9 @@ const app = express();
 
 app.use('*', cors());
 
-const server = http.createServer(http);
+//const server = http.createServer(http);
 
-
-io = io(server, {transports: ['websocket', 'polling', 'flashsocket']});
+io = io('*', {transports: ['websocket', 'polling', 'flashsocket']});
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({

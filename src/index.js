@@ -1,7 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-
 const io = require('socket.io');
 
 const http = require('http');
@@ -15,8 +14,7 @@ app.use('*', cors());
 const server = http.createServer(http);
 
 
-io = io(server);
-io.origins(['*']);
+io = io(server, {transports: ['websocket', 'polling', 'flashsocket']});
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({

@@ -12,7 +12,8 @@ class Establishment{
             city,
             image,
             state,
-            localization,
+            latitude,
+            longitude,
             totalRating,
             idUser,
             idEtype
@@ -23,7 +24,7 @@ class Establishment{
             function (){ this.where({
                 nm_estabelecimento: name,
                 nm_cidade_estabelecimento: city
-            }).orWhere({ loc_estabelecimento: localization })}
+            }).orWhere({ latitude: latitude, longitude: longitude })}
             
         );
         if(verifyEstablishment === true) {
@@ -40,7 +41,8 @@ class Establishment{
             nm_cidade_estabelecimento: city,
             img_estabelecimento: eImage,
             sg_estado: state,
-            loc_estabelecimento: localization,
+            latitude: latitude,
+            longitude: longitude,
             qt_media_stars: totalRating,
             id_usuario: idUser,
             id_tp_estabelecimento: idEtype

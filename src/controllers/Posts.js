@@ -177,6 +177,9 @@ class Post{
     async showPosts(req, res){
         const { userID } = req.params;
         const { userCity } = req.body;
+        let fullPost = {};
+        let allPosts = [];
+
 
         try {
             const posts = await knex(knex.raw('tb_post p, tb_usuario u'))
@@ -186,7 +189,37 @@ class Post{
                                 p.id_usuario = any (select cd_usuario from tb_usuario where tp_pessoa = 'Jurídica' and nm_cidade = '${userCity}') and
                                 p.id_usuario = cd_usuario`))
                                 .select('p.*');
-            return res.status(200).json(posts);
+
+            for(let i = 0; i <= posts.length-1; i++){
+                const postOwner = await knex('tb_usuario').select('*').where({cd_usuario: posts[i].id_usuario}).first();
+                const likes = await knex(knex.raw('tb_usuario u'))
+                .select('u.*')
+                .leftJoin(knex.raw('tb_likes l'), knex.raw('l.id_usuario = u.cd_usuario'))
+                .where({ id_post: posts[i].cd_post });
+
+
+                fullPost = {
+                    postData: {
+                        id: posts[i].cd_post,
+                        title: posts[i].nm_titulo,
+                        desc: posts[i].ds_post,
+                        postImage: posts[i].img_post,
+                        price: posts[i].val_prod_serv,
+                        uID: posts[i].id_usuario,
+                        likesNum: likes.length,
+                        whoLiked: likes
+                    },
+                    Owner: {
+                        name: postOwner.nm_usuario,
+                        profilePic: postOwner.img_foto,
+                        type: postOwner.tp_pessoa,
+                        city: postOwner.nm_cidade
+                    }
+                }
+                allPosts.push(fullPost);
+            }
+            return res.status(200).json(allPosts);
+            
         } catch (err) {
             console.log(err);
             return res.status(400).send({

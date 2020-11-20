@@ -41,7 +41,7 @@ class Follow{
             return res.status(200).json({
                 success: `Você segue ${following.length} outros usuários`,
                 followersNum: following.length,
-                followers: following
+                following: following
             });
 
         }catch(err){

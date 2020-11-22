@@ -228,5 +228,57 @@ class Post{
         }
 
     }
+    async showUserPosts(req, res){
+        const { userID } = req.params;
+        let fullPost = {};
+        let allPosts = [];
+
+
+        try {
+            const posts = await knex(knex.raw('tb_post p'))
+                                .leftJoin('tb_tipo_produto_servico', 'p.id_tp_prod_serv', 'tb_tipo_produto_servico.cd_tp_prod_serv')
+                                .where({id_usuario: userID})
+                                .select('p.*, tb_tipo_produto_servico.nm_tp_prod_serv');
+
+            for(let i = 0; i <= posts.length-1; i++){
+                const postOwner = await knex('tb_usuario').select('*').where({cd_usuario: posts[i].id_usuario}).first();
+                const likes = await knex(knex.raw('tb_usuario u'))
+                .select('u.*')
+                .leftJoin(knex.raw('tb_likes l'), knex.raw('l.id_usuario = u.cd_usuario'))
+                .where({ id_post: posts[i].cd_post });
+
+
+                fullPost = {
+                    postData: {
+                        id: posts[i].cd_post,
+                        title: posts[i].nm_titulo,
+                        desc: posts[i].ds_post,
+                        postImage: posts[i].img_post,
+                        price: posts[i].val_prod_serv,
+                        uID: posts[i].id_usuario,
+                        postType: posts[i].nm_tp_prod_serv,
+                        likesNum: likes.length,
+                        whoLiked: likes
+                    },
+                    Owner: {
+                        name: postOwner.nm_usuario,
+                        profilePic: postOwner.img_foto,
+                        type: postOwner.tp_pessoa,
+                        city: postOwner.nm_cidade,
+                        phone: postOwner.nr_telefone
+                    }
+                }
+                allPosts.push(fullPost);
+            }
+            return res.status(200).json(allPosts);
+            
+        } catch (err) {
+            console.log(err);
+            return res.status(400).send({
+                error: 'Ocorreu um erro ao buscar Posts'
+            });
+        }
+
+    }
 }
 module.exports = Post;

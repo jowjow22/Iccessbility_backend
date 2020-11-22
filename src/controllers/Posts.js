@@ -185,7 +185,7 @@ class Post{
                                 .leftJoin('tb_follow', 'tb_follow.id_usuario', 'u.cd_usuario')
                                 .where(knex.raw(`p.id_usuario = tb_follow.id_usuario_segue and
                                 tb_follow.id_usuario = ${userID} or
-                                p.id_usuario = any (select cd_usuario from tb_usuario where tp_pessoa = 'Jurídica' and nm_cidade = '${eval(userCity)}') and
+                                p.id_usuario = any (select cd_usuario from tb_usuario where tp_pessoa = 'Jurídica' and nm_cidade = '${userCity}') and
                                 p.id_usuario = cd_usuario`))
                                 .select('p.*');
 

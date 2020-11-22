@@ -65,7 +65,7 @@ class Establishment{
         }
     }
     async showInCity(req, res){
-        const { cityName } = req.query;
+        const { cityName } = req.body;
         try{
             const establishments = await knex.select(knex.raw('e.*, group_concat(nm_acessibilidade) as acessibilidade'))
             .from(knex.raw('tb_acessibilidade a, tb_estabelecimento e'))

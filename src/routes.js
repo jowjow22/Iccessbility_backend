@@ -104,7 +104,7 @@ routes.patch('/typePS/:typePSID', auth.auth, typePS.update);
 
 // POST ROUTES
 routes.post('/post', auth.auth, post.create);
-routes.delete('/post/:postID/:userID', auth.auth, post.delete);
+routes.delete('/post/:userID/:postID', auth.auth, post.delete);
 routes.patch('/post/:postID/:userID', auth.auth, post.update);
 routes.patch('/post/image/:pID/:uID', auth.auth, post.postImageUpdate);
 routes.get('/post/:userID/:userCity', auth.auth, post.showPosts);

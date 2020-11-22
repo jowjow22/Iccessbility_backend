@@ -256,6 +256,7 @@ class Post{
                         postImage: posts[i].img_post,
                         price: posts[i].val_prod_serv,
                         uID: posts[i].id_usuario,
+                        discount: posts[i].qt_desconto,
                         postType: posts[i].nm_tp_prod_serv,
                         likesNum: likes.length,
                         whoLiked: likes

@@ -82,6 +82,24 @@ class Establishment{
         }
 
     }
+    async showOne(req, res){
+        const { eID } = req.params;
+        try{
+            const establishments = await knex.select(knex.raw('e.*, group_concat(nm_acessibilidade) as acessibilidade'))
+            .from(knex.raw('tb_acessibilidade a, tb_estabelecimento e'))
+            .rightJoin('tb_estabelecimento_acessibilidade', 'tb_estabelecimento_acessibilidade.id_estabelecimento', 'e.cd_estabelecimento')
+            .where(knex.raw(`e.cd_estabelecimento = "${eID}"`))
+            .andWhere(knex.raw('tb_estabelecimento_acessibilidade.id_acessibilidade = a.cd_acessibilidade group by nm_estabelecimento'));
+            
+            return res.status(200).json(establishments);
+        }catch(err){
+            console.log(err);
+            return res.status(404).send({
+                erro: "Não foi possivel encontrar a estabelecimentos"
+            });
+        }
+
+    }
     async delete(req, res){
         const { uID, eID } = req.params;
         const verifyEstablishment = await verifyEntity('tb_estabelecimento', { 

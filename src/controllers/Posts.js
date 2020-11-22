@@ -209,6 +209,7 @@ class Post{
                         whoLiked: likes
                     },
                     Owner: {
+                        id: postOwner.cd_usuario,
                         name: postOwner.nm_usuario,
                         profilePic: postOwner.img_foto,
                         type: postOwner.tp_pessoa,

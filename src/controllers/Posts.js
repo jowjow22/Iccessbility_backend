@@ -235,10 +235,10 @@ class Post{
 
 
         try {
-            const posts = await knex(knex.raw('tb_post p'))
-                                .leftJoin('tb_tipo_produto_servico', 'p.id_tp_prod_serv', 'tb_tipo_produto_servico.cd_tp_prod_serv')
-                                .where({id_usuario: userID})
-                                .select('p.*, tb_tipo_produto_servico.nm_tp_prod_serv');
+            const posts = await knex('tb_post')
+                                .leftJoin('tb_tipo_produto_servico', 'tb_post.id_tp_prod_serv', 'tb_tipo_produto_servico.cd_tp_prod_serv')
+                                .where({id_usuario: eval(userID)})
+                                .select('tb_post.*', 'tb_tipo_produto_servico.nm_tp_prod_serv');
 
             for(let i = 0; i <= posts.length-1; i++){
                 const postOwner = await knex('tb_usuario').select('*').where({cd_usuario: posts[i].id_usuario}).first();

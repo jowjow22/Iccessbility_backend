@@ -212,7 +212,8 @@ class Post{
                         name: postOwner.nm_usuario,
                         profilePic: postOwner.img_foto,
                         type: postOwner.tp_pessoa,
-                        city: postOwner.nm_cidade
+                        city: postOwner.nm_cidade,
+                        phone: postOwner.nr_telefone
                     }
                 }
                 allPosts.push(fullPost);

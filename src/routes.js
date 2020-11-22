@@ -107,6 +107,7 @@ routes.delete('/post/:postID/:userID', auth.auth, post.delete);
 routes.patch('/post/:postID/:userID', auth.auth, post.update);
 routes.patch('/post/image/:pID/:uID', auth.auth, post.postImageUpdate);
 routes.get('/post/:userID/:userCity', auth.auth, post.showPosts);
+routes.get('/post/:userID', auth.auth, post.showUserPosts);
 
 
 // INTEREST ROUTES

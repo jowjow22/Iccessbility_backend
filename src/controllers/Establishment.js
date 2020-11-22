@@ -128,6 +128,20 @@ class Establishment{
             });
         }
     }
+    async showInUser(req, res) {
+        const {userID} = req.params;
+
+        try {
+            const establishments = await knex('tb_estabelecimento').where({id_usuario: userID}).select();
+
+            return res.status(200).json(establishments);
+        } catch (err) {
+            console.log(err);
+            return res.status(404).send({
+                Error: 'Não foi possivel encontrar estabelecimentos'
+            });
+        }
+    }
     async update(req, res){
         const {
             name,

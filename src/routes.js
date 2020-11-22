@@ -67,6 +67,7 @@ routes.delete('/unfollow/:uFollowID/:uFollowingID', auth.auth, follow.unfollow);
 
 routes.post('/establishment', auth.auth, establishment.create);
 routes.get('/establishment/:cityName', establishment.showInCity);
+routes.get('/establishment/user/:userID', establishment.showInUser);
 routes.get('/establishment/showOne/:eID', establishment.showOne);
 routes.delete('/establishment/:uID/:eID',auth.auth, establishment.delete);
 routes.patch('/establishment/:uID/:eID',auth.auth, establishment.update);

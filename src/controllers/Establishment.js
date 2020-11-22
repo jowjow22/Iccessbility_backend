@@ -88,7 +88,7 @@ class Establishment{
             const establishments = await knex.select(knex.raw('e.*, group_concat(nm_acessibilidade) as acessibilidade'))
             .from(knex.raw('tb_acessibilidade a, tb_estabelecimento e'))
             .rightJoin('tb_estabelecimento_acessibilidade', 'tb_estabelecimento_acessibilidade.id_estabelecimento', 'e.cd_estabelecimento')
-            .where(knex.raw(`e.cd_estabelecimento = ${eID}`))
+            .where(knex.raw(`e.cd_estabelecimento = ${eval(eID)}`))
             .andWhere(knex.raw('tb_estabelecimento_acessibilidade.id_acessibilidade = a.cd_acessibilidade group by nm_estabelecimento'));
             
             return res.status(200).json(establishments);

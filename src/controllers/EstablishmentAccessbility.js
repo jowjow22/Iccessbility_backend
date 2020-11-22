@@ -13,7 +13,7 @@ class EstablishmentAccessbility{
         });
 
         if(verifyEAccessbility === true){
-            return res.status(401).send({
+            return res.status(401).json({
                 error: 'Você Já adicionou esse tipo de acessibilidade ao seu estabelecimento'
             });
         }

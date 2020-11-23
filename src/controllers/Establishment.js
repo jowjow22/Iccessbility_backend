@@ -147,7 +147,8 @@ class Establishment{
             name,
             city,
             state,
-            localization,
+            latitude,
+            longitude,
             totalRating,
             idUser,
             idEtype
@@ -157,7 +158,8 @@ class Establishment{
             nm_estabelecimento: name,
             nm_cidade_estabelecimento: city,
             sg_estado: state,
-            loc_estabelecimento: localization,
+            latitude,
+            longitude,
             qt_media_stars: totalRating,
             id_usuario: idUser,
             id_tp_estabelecimento: idEtype

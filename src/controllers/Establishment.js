@@ -150,7 +150,6 @@ class Establishment{
             latitude,
             longitude,
             totalRating,
-            idUser,
             idEtype
         } = req.body;
 
@@ -161,7 +160,6 @@ class Establishment{
             latitude,
             longitude,
             qt_media_stars: totalRating,
-            id_usuario: idUser,
             id_tp_estabelecimento: idEtype
         }
 

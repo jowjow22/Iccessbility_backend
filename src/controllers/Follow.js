@@ -51,6 +51,34 @@ class Follow{
             });
         }
     }
+    async verifyFollow(req, res){
+        const { userID, userVerifyID } = req.params;
+
+        try{
+            const follow = {
+                id_usuario : userID,
+                id_usuario_segue: userVerifyID
+            }
+    
+            const verifyFollow = await verifyEntity('tb_follow', follow);
+
+            if(verifyFollow === true){
+                return res.status(200).json({
+                    following: true,
+                });
+            }else{
+                return res.status(200).json({
+                    following: false,
+                });
+            }
+
+        }catch(err){
+            console.log(err);
+            return res.status(400).send({
+                erro: 'Erro ao buscar seguidores'
+            });
+        }
+    }
     async showFollowers(req, res){
        const { userID } = req.params;
 
